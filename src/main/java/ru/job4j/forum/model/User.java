@@ -8,6 +8,19 @@ public class User {
     private String name;
     private String password;
 
+    public static User of(String name) {
+        var user = new User();
+        user.name = name;
+        return user;
+    }
+
+    public static User of(String name, String password) {
+        var user = new User();
+        user.name = name;
+        user.password = password;
+        return user;
+    }
+
     public int getId() {
         return id;
     }

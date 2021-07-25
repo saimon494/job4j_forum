@@ -10,10 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class LoginControl {
 
-    private UserService users;
+    private final UserService userService;
 
-    public LoginControl(UserService users) {
-        this.users = users;
+    public LoginControl(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping("/login")
@@ -31,7 +31,7 @@ public class LoginControl {
     public String login(HttpServletRequest request,
                         @RequestParam String name,
                         @RequestParam String password) {
-        var user = users.findAuth(name, password);
+        var user = userService.findAuth(name, password);
         if (user != null) {
             request.getSession().setAttribute("user", user);
             return "redirect:/index";

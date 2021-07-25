@@ -2,63 +2,40 @@ package ru.job4j.forum.service;
 
 import org.springframework.stereotype.Service;
 import ru.job4j.forum.model.Post;
+import ru.job4j.forum.model.User;
+import ru.job4j.forum.repository.PostRepository;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 @Service
 public class PostService {
 
-    private final List<Post> posts = new ArrayList<>();
-    private int lastId = 0;
-    private final UserService userService;
+    private final PostRepository postRepository;
 
-    public PostService(UserService userService) {
-        this.userService = userService;
-        Post post = new Post();
-        post.setName("Правила форума");
-        post.setDesc("Обязательно к прочтению");
-        post.setCreated(new GregorianCalendar(2021, Calendar.JULY, 27));
-        post.setAuthor(userService.findByName("admin"));
-        save(post);
+    public PostService(PostRepository postRepository) {
+        this.postRepository = postRepository;
     }
 
     public void save(Post post) {
-        if (post.getId() == 0) {
-            create(post);
-        } else {
-            update(post);
-        }
+        postRepository.save(post);
     }
 
-    private void create(Post post) {
-        post.setId(++lastId);
-        posts.add(post);
-    }
-
-    private void update(Post post) {
-        int id = posts.indexOf(post);
-        if (id != -1) {
-            posts.set(id, post);
-        }
-    }
-
-    public void updateNameDesc(Post post) {
-        Optional.of(findById(post.getId())).ifPresent(
-                post1 -> {
-                    post1.setName(post.getName());
-                    post1.setDesc(post.getDesc());
-                }
-        );
-    }
-
-    public List<Post> findAll() {
-        return posts;
+    public Collection<Post> findAll() {
+        return postRepository.findAll();
     }
 
     public Post findById(int id) {
-        return posts.stream()
-                .filter(post -> post.getId() == id)
-                .findFirst()
-                .orElse(null);
+        return postRepository.findById(id);
+    }
+
+    public void createPost(HttpServletRequest request, Post post) {
+        if (post.getId() != 0)  {
+            postRepository.updateNameDesc(post);
+        } else {
+            post.setAuthor((User) request.getSession().getAttribute("user"));
+            post.setCreated(GregorianCalendar.getInstance());
+            save(post);
+        }
     }
 }

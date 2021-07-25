@@ -12,10 +12,10 @@ import ru.job4j.forum.service.UserService;
 @Controller
 public class RegControl {
 
-    private UserService users;
+    private final UserService userService;
 
-    public RegControl(UserService users) {
-        this.users = users;
+    public RegControl(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping("/reg")
@@ -31,10 +31,10 @@ public class RegControl {
 
     @PostMapping("/reg")
     public String reg(@ModelAttribute User user) {
-        if (users.findByName(user.getName()) != null) {
+        if (userService.findByName(user.getName()) != null) {
             return "redirect:/reg?error=true";
         }
-        users.save(user);
+        userService.save(user);
         return "redirect:/login";
     }
 }

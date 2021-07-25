@@ -7,27 +7,25 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.job4j.forum.model.Message;
-import ru.job4j.forum.model.User;
 import ru.job4j.forum.service.MessageService;
 import ru.job4j.forum.service.PostService;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.GregorianCalendar;
 
 @Controller
 public class PostControl {
 
-    private PostService posts;
-    private MessageService messages;
+    private final PostService postService;
+    private final MessageService messageService;
 
-    public PostControl(PostService posts, MessageService messages) {
-        this.posts = posts;
-        this.messages = messages;
+    public PostControl(PostService postService, MessageService messageService) {
+        this.postService = postService;
+        this.messageService = messageService;
     }
 
     @GetMapping("/post")
     public String postPage(@RequestParam int postId, Model model) {
-        model.addAttribute("post", posts.findById(postId));
+        model.addAttribute("post", postService.findById(postId));
         return "post";
     }
 
@@ -35,11 +33,7 @@ public class PostControl {
     public String createMessage(@ModelAttribute Message message,
                                 @RequestParam int postId,
                                 HttpServletRequest request) {
-        var user = (User) request.getSession().getAttribute("user");
-        message.setAuthor(user);
-        message.setCreated(GregorianCalendar.getInstance());
-        messages.save(message);
-        posts.findById(postId).addMessage(message);
+        messageService.save(message, postId, request);
         return "redirect:/post?postId=" + postId;
     }
 }

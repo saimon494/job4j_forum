@@ -11,15 +11,14 @@ import ru.job4j.forum.model.User;
 import ru.job4j.forum.service.PostService;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.GregorianCalendar;
 
 @Controller
 public class EditControl {
 
-    private PostService posts;
+    private final PostService postService;
 
-    public EditControl(PostService posts) {
-        this.posts = posts;
+    public EditControl(PostService postService) {
+        this.postService = postService;
     }
 
     @GetMapping("/post/edit")
@@ -28,7 +27,7 @@ public class EditControl {
                            Model model) {
         if (postId != null) {
             var user = (User) request.getSession().getAttribute("user");
-            var post = posts.findById(postId);
+            var post = postService.findById(postId);
             if (post == null || post.getAuthor().getId() != user.getId()) {
                 return "redirect:/index";
             }
@@ -39,13 +38,7 @@ public class EditControl {
 
     @PostMapping("/post/create")
     public String createPost(HttpServletRequest request, @ModelAttribute Post post) {
-        if (post.getId() != 0)  {
-            posts.updateNameDesc(post);
-        } else {
-            post.setAuthor((User) request.getSession().getAttribute("user"));
-            post.setCreated(GregorianCalendar.getInstance());
-            posts.save(post);
-        }
+        postService.createPost(request, post);
         return "redirect:/index";
     }
 }

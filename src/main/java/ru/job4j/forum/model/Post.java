@@ -11,6 +11,15 @@ public class Post {
     private Calendar created;
     private List<Message> messages = new ArrayList<>();
 
+    public static Post of(String name, String desc, User author, Calendar created) {
+        var post = new Post();
+        post.name = name;
+        post.desc = desc;
+        post.author = author;
+        post.created = created;
+        return post;
+    }
+
     public int getId() {
         return id;
     }

@@ -8,15 +8,15 @@ import ru.job4j.forum.service.PostService;
 @Controller
 public class IndexControl {
 
-    private final PostService posts;
+    private final PostService postService;
 
-    public IndexControl(PostService posts) {
-        this.posts = posts;
+    public IndexControl(PostService postService) {
+        this.postService = postService;
     }
 
     @GetMapping({"/", "/index"})
     public String index(Model model) {
-        model.addAttribute("posts", posts.findAll());
+        model.addAttribute("posts", postService.findAll());
         return "index";
     }
 }
