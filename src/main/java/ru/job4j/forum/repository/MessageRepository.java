@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
-@Repository
+//@Repository
 public class MessageRepository {
 
     private static final AtomicInteger MESSAGE_ID = new AtomicInteger(0);

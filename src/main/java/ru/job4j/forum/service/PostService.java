@@ -1,9 +1,10 @@
 package ru.job4j.forum.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.job4j.forum.model.Post;
 import ru.job4j.forum.model.User;
-import ru.job4j.forum.repository.PostRepository;
+import ru.job4j.forum.repository.PostCrudRep;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
@@ -11,27 +12,33 @@ import java.util.*;
 @Service
 public class PostService {
 
-    private final PostRepository postRepository;
+    private final PostCrudRep postCrudRep;
 
-    public PostService(PostRepository postRepository) {
-        this.postRepository = postRepository;
+    public PostService(PostCrudRep postCrudRep) {
+        this.postCrudRep = postCrudRep;
     }
 
+    @Transactional
     public void save(Post post) {
-        postRepository.save(post);
+        postCrudRep.save(post);
     }
 
-    public Collection<Post> findAll() {
-        return postRepository.findAll();
+    @Transactional
+    public List<Post> findAll() {
+        List<Post> rsl = new ArrayList<>();
+        postCrudRep.findAll().forEach(rsl::add);
+        rsl.sort(Comparator.comparing(Post::getId));
+        return rsl;
     }
 
     public Post findById(int id) {
-        return postRepository.findById(id);
+        return postCrudRep.findById(id).orElse(null);
     }
 
+    @Transactional
     public void createPost(HttpServletRequest request, Post post) {
         if (post.getId() != 0)  {
-            postRepository.updateNameDesc(post);
+            postCrudRep.updateNameDesc(post.getId(), post.getName(), post.getDescription());
         } else {
             post.setAuthor((User) request.getSession().getAttribute("user"));
             post.setCreated(GregorianCalendar.getInstance());

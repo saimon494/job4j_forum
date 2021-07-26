@@ -8,7 +8,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Predicate;
 
-@Repository
+//@Repository
 public class UserRepository {
 
     private static final AtomicInteger USER_ID = new AtomicInteger(0);

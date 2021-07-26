@@ -76,7 +76,7 @@
                                    style="padding-left: 0">
                                     <i class="fa fa-envelope"></i>&nbsp; ${post.name}</a>
                             </td>
-                            <td style="vertical-align: middle">${post.desc}</td>
+                            <td style="vertical-align: middle">${post.description}</td>
                             <td style="vertical-align: middle">${post.author.name}</td>
                             <td style="vertical-align: middle">${post.created.time}</td>
                             <td style="vertical-align: middle">${post.messages.size()}</td>

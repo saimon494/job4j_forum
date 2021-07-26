@@ -1,20 +1,33 @@
 package ru.job4j.forum.model;
 
+import javax.persistence.*;
 import java.util.*;
 
+@Entity
+@Table(name = "post")
 public class Post {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
-    private String desc;
+
+    @Column(name = "description")
+    private String description;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
+    @JoinColumn(name = "user_id", nullable = false)
     private User author;
+
     private Calendar created;
+
+    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
     private List<Message> messages = new ArrayList<>();
 
-    public static Post of(String name, String desc, User author, Calendar created) {
+    public static Post of(String name, String description, User author, Calendar created) {
         var post = new Post();
         post.name = name;
-        post.desc = desc;
+        post.description = description;
         post.author = author;
         post.created = created;
         return post;
@@ -36,12 +49,12 @@ public class Post {
         this.name = name;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setDescription(String desc) {
+        this.description = desc;
     }
 
     public User getAuthor() {
@@ -58,10 +71,6 @@ public class Post {
 
     public void setCreated(Calendar created) {
         this.created = created;
-    }
-
-    public void addMessage(Message mes) {
-        messages.add(mes);
     }
 
     public List<Message> getMessages() {

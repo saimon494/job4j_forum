@@ -8,7 +8,7 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
-@Repository
+//@Repository
 public class PostRepository {
 
     private static final AtomicInteger POST_ID = new AtomicInteger(0);
@@ -41,7 +41,7 @@ public class PostRepository {
         Optional.of(findById(post.getId())).ifPresent(
                 post1 -> {
                     post1.setName(post.getName());
-                    post1.setDesc(post.getDesc());
+                    post1.setDescription(post.getDescription());
                 }
         );
     }

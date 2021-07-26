@@ -38,7 +38,7 @@
                     </div>
                     <div class="form-group">
                         <label for="desc">Описание:</label>
-                        <input type="text" class="form-control" name="desc" id="desc" value="${post.desc}"
+                        <input type="text" class="form-control" name="description" id="desc" value="${post.description}"
                                title="Описание">
                     </div>
                     <button type="submit" class="btn btn-primary">Отправить</button>

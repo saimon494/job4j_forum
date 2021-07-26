@@ -69,7 +69,7 @@
                         <div class="row">
                             <small class="text-muted">${post.created.time}</small>
                         </div>
-                        <div class="row">${post.desc}</div>
+                        <div class="row">${post.description}</div>
                     </div>
                 </div>
             </div>
