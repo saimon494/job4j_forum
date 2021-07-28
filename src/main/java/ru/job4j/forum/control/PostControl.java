@@ -1,5 +1,6 @@
 package ru.job4j.forum.control;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,8 +10,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ru.job4j.forum.model.Message;
 import ru.job4j.forum.service.MessageService;
 import ru.job4j.forum.service.PostService;
-
-import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class PostControl {
@@ -26,14 +25,15 @@ public class PostControl {
     @GetMapping("/post")
     public String postPage(@RequestParam int postId, Model model) {
         model.addAttribute("post", postService.findById(postId));
+        model.addAttribute("user",
+                SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         return "post";
     }
 
     @PostMapping("/message/create")
     public String createMessage(@ModelAttribute Message message,
-                                @RequestParam int postId,
-                                HttpServletRequest request) {
-        messageService.save(message, postId, request);
+                                @RequestParam int postId) {
+        messageService.save(message, postId);
         return "redirect:/post?postId=" + postId;
     }
 }

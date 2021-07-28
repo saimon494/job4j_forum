@@ -1,6 +1,5 @@
 package ru.job4j.forum.repository;
 
-import org.springframework.stereotype.Repository;
 import ru.job4j.forum.model.User;
 
 import java.util.Map;
@@ -26,11 +25,11 @@ public class UserRepository {
     }
 
     public User findByName(String name) {
-        return findUnique(user -> user.getName().equals(name));
+        return findUnique(user -> user.getUsername().equals(name));
     }
 
     public User findAuth(String name, String password) {
-        return findUnique(user -> user.getName().equals(name)
+        return findUnique(user -> user.getUsername().equals(name)
                 && user.getPassword().equals(password));
     }
 

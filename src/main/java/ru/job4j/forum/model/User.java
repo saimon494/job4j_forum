@@ -11,18 +11,24 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String name;
+    private String username;
     private String password;
+
+    @ManyToOne
+    @JoinColumn(name = "authority_id")
+    private Authority authority;
+
+    private boolean enabled;
 
     public static User of(String name) {
         var user = new User();
-        user.name = name;
+        user.username = name;
         return user;
     }
 
     public static User of(String name, String password) {
         var user = new User();
-        user.name = name;
+        user.username = name;
         user.password = password;
         return user;
     }
@@ -35,12 +41,12 @@ public class User {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String name) {
+        this.username = name;
     }
 
     public String getPassword() {
@@ -49,6 +55,22 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Authority getAuthority() {
+        return authority;
+    }
+
+    public void setAuthority(Authority authority) {
+        this.authority = authority;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     @Override

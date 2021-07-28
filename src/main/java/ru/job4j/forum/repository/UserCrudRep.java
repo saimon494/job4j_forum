@@ -5,7 +5,7 @@ import ru.job4j.forum.model.User;
 
 public interface UserCrudRep extends CrudRepository<User, Integer> {
 
-    User findFirstByName(String name);
-
-    User findUserByNameAndPassword(String name, String password);
+    User findByUsername(String name);
+//
+//    User findUserByNameAndPassword(String name, String password);
 }

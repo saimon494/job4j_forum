@@ -1,11 +1,9 @@
 package ru.job4j.forum.control;
 
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import ru.job4j.forum.model.User;
 import ru.job4j.forum.service.UserService;
 
@@ -18,8 +16,13 @@ public class RegControl {
         this.userService = userService;
     }
 
+    @ExceptionHandler(ConstraintViolationException.class)
+    public String handleConstraintViolationException() {
+        return "redirect:/reg?error=true";
+    }
+
     @GetMapping("/reg")
-    public String regPage(@RequestParam(required = false) String error,
+    public String regPage(@RequestParam(value = "error", required = false) String error,
                           Model model) {
         String errorMessage = null;
         if (error != null) {
@@ -31,9 +34,6 @@ public class RegControl {
 
     @PostMapping("/reg")
     public String reg(@ModelAttribute User user) {
-        if (userService.findByName(user.getName()) != null) {
-            return "redirect:/reg?error=true";
-        }
         userService.save(user);
         return "redirect:/login";
     }

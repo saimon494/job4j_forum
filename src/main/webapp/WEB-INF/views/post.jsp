@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
@@ -38,7 +38,7 @@
                         <c:when test="${not empty user}">
                             <li class="nav-item">
                                 <a class="nav-link" href="<c:url value='/logout'/>">
-                                    <i class="fa fa-user"></i>&nbsp; ${user.name} | Выйти
+                                    <i class="fa fa-user"></i>&nbsp; ${user.username} | Выйти
                                 </a>
                             </li>
                         </c:when>
@@ -63,7 +63,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-2 my-auto">
-                        <i class="fa fa-user"></i>&nbsp; ${post.author.name}
+                        <i class="fa fa-user"></i>&nbsp; ${post.author.username}
                     </div>
                     <div class="col-md-10 my-auto">
                         <div class="row">
@@ -81,7 +81,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-2 my-auto">
-                            <i class="fa fa-user"></i>&nbsp; ${message.author.name}
+                            <i class="fa fa-user"></i>&nbsp; ${message.author.username}
                         </div>
                         <div class="col-md-10 my-auto">
                             <div class="row">
@@ -113,6 +113,5 @@
         </div>
     </div>
 </c:if>
-
 </body>
 </html>

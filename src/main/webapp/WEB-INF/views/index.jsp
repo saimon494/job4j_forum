@@ -34,7 +34,7 @@
                                     <c:when test="${not empty user}">
                                         <li class="nav-item">
                                             <a class="nav-link" href="<c:url value='/logout'/>">
-                                                <i class="fa fa-user"></i>&nbsp; ${user.name} | Выйти
+                                                <i class="fa fa-user"></i>&nbsp; ${user.username} | Выйти
                                             </a>
                                         </li>
                                     </c:when>
@@ -77,11 +77,11 @@
                                     <i class="fa fa-envelope"></i>&nbsp; ${post.name}</a>
                             </td>
                             <td style="vertical-align: middle">${post.description}</td>
-                            <td style="vertical-align: middle">${post.author.name}</td>
+                            <td style="vertical-align: middle">${post.author.username}</td>
                             <td style="vertical-align: middle">${post.created.time}</td>
                             <td style="vertical-align: middle">${post.messages.size()}</td>
                             <td style="vertical-align: middle">
-                                <c:if test="${post.author.id == user.id}">
+                                <c:if test="${post.author.username == user.username}">
                                     <a href='<c:url value="/post/edit?postId=${post.id}"/>'>
                                         <i class="fa fa-edit mr-3"></i>
                                     </a>

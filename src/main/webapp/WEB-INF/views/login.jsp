@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
@@ -42,8 +42,8 @@
             <div class="card-body">
                 <form name="login" action="<c:url value='/login'/>" method='POST'>
                     <div class="form-group">
-                        <label for="name">Имя пользователя:</label>
-                        <input type="text" class="form-control" name="name" id="name" required>
+                        <label for="username">Имя пользователя:</label>
+                        <input type="text" class="form-control" name="username" id="username" required>
                     </div>
                     <div class="form-group">
                         <label for="password">Пароль:</label>
@@ -53,6 +53,7 @@
                     <c:if test="${not empty errorMessage}">
                         <div class="alert alert-danger mt-3 mb-0" role="alert" id="msg">${errorMessage}</div>
                     </c:if>
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                 </form>
             </div>
         </div>
