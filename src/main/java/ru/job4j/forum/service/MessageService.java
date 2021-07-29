@@ -17,7 +17,9 @@ public class MessageService {
     private final PostCrudRep postCrudRep;
     private final UserCrudRep userCrudRep;
 
-    public MessageService(MessageCrudRep messageCrudRep, PostCrudRep postCrudRep, UserCrudRep userCrudRep) {
+    public MessageService(MessageCrudRep messageCrudRep,
+                          PostCrudRep postCrudRep,
+                          UserCrudRep userCrudRep) {
         this.messageCrudRep = messageCrudRep;
         this.postCrudRep = postCrudRep;
         this.userCrudRep = userCrudRep;
