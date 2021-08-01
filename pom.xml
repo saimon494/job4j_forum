@@ -81,6 +81,11 @@
             <version>2.2</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+            <version>4.4.2</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
